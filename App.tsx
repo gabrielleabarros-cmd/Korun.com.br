@@ -7,7 +7,7 @@ import {
   LayoutDashboard, Database, ShieldCheck, Download, 
   BookOpen, Eye, Globe, Share2, Search, Cpu, Mic, 
   Image as ImageIcon, Play, MessageSquare, Loader2, Upload,
-  Key, Lock
+  Key, Lock, HeartHandshake
 } from 'lucide-react';
 
 // --- Assets & Icons ---
@@ -17,7 +17,7 @@ const KorunLogo: React.FC<{ className?: string, dark?: boolean }> = ({ className
     <circle cx="50" cy="50" r="45" stroke={dark ? "#0A1C2F" : "#F2F4F5"} strokeWidth="3" className="opacity-80"/> 
     <line x1="50" y1="5" x2="50" y2="95" stroke={dark ? "#008F89" : "#E4C46F"} strokeWidth="2"/> 
     <circle cx="50" cy="50" r="8" fill={dark ? "#008F89" : "#E4C46F"}>
-       <animate attributeName="opacity" values="1;0.6;1" dur="3s" repeatCount="indefinite"/>
+       <animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite"/>
     </circle>
   </svg>
 );
@@ -194,7 +194,7 @@ export default function App() {
   const [apiKey, setApiKey] = useState<string>('');
   
   // AI Demo State
-  const [aiTab, setAiTab] = useState<'thinking' | 'tts' | 'image'>('thinking');
+  const [aiTab, setAiTab] = useState<'thinking' | 'behavioral' | 'tts' | 'image'>('thinking');
   const [aiInput, setAiInput] = useState('');
   const [aiOutput, setAiOutput] = useState<string | null>(null);
   const [isAiProcessing, setIsAiProcessing] = useState(false);
@@ -252,6 +252,29 @@ export default function App() {
           }
         });
         setAiOutput(response.text || "No response generated.");
+      } else if (aiTab === 'behavioral') {
+        // Behavioral Analysis Persona
+        const systemInstruction = `You are the Chief Behavioral Officer for a smart city using the Korun Intelligence platform.
+        Your task is to analyze the provided public sentiment data or urban feedback through the lens of behavioral science and social psychology.
+        
+        Structure your response exactly as follows:
+        1. **Emotional Climate:** (Identify the dominant emotion, e.g., Frustration, Anxiety, Resignation)
+        2. **Cognitive Biases:** (Identify biases affecting perception, e.g., Recency Bias, Loss Aversion, Status Quo Bias)
+        3. **Behavioral Drivers:** (What psychological needs are unmet?)
+        4. **Strategic Nudge:** (A concrete, low-cost intervention to shift behavior or sentiment)
+        
+        Keep the tone professional, scientific, yet empathetic.`;
+
+        const response = await ai.models.generateContent({
+          model: 'gemini-3-pro-preview',
+          contents: aiInput,
+          config: {
+            systemInstruction: systemInstruction,
+            thinkingConfig: { thinkingBudget: 16000 } // Moderate thinking budget for analysis
+          }
+        });
+        setAiOutput(response.text || "No behavioral analysis generated.");
+
       } else if (aiTab === 'tts') {
         const response = await ai.models.generateContent({
           model: 'gemini-2.5-flash-preview-tts',
@@ -402,13 +425,13 @@ export default function App() {
                 {/* Floating Cards */}
                 <div className="absolute top-[30%] right-[10%] bg-midnight-light/90 backdrop-blur border border-teal/30 p-4 rounded w-64 shadow-2xl">
                     <div className="flex justify-between items-center mb-2">
-                        <span className="text-[10px] text-teal font-bold uppercase">Predição Climática</span>
+                        <span className="text-[10px] text-teal font-bold uppercase">Segurança Pública</span>
                         <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                     </div>
                     <div className="h-1 w-full bg-white/10 rounded overflow-hidden mb-2">
                         <div className="h-full bg-red-500 w-[80%]"></div>
                     </div>
-                    <p className="text-[10px] text-gray-400">Risco de alagamento em 2h.</p>
+                    <p className="text-[10px] text-gray-400">Movimentação Atípica Detectada.</p>
                 </div>
             </div>
           </div>
@@ -575,8 +598,8 @@ export default function App() {
                   </div>
                 </div>
                 <div className="flex gap-4 text-sm text-gray-400">
-                  <span>Risco Climático: <strong className="text-red-400">Alto</strong></span>
-                  <span>Sentimento Social: <strong className="text-gold">Neutro</strong></span>
+                  <span>Eficiência Operacional: <strong className="text-teal">Alta</strong></span>
+                  <span>Fluxo de Mobilidade: <strong className="text-gold">Intenso</strong></span>
                 </div>
               </div>
 
@@ -597,7 +620,7 @@ export default function App() {
                   <div className="absolute bottom-1/3 right-1/3 w-24 h-24 bg-gold/10 rounded-full blur-2xl"></div>
                   
                   {/* Pins */}
-                  <div className="absolute top-[40%] left-[45%] text-gold animate-bounce"><MapPin size={24} fill="#E4C46F" /></div>
+                  <div className="absolute top-[40%] left-[45%] text-gold animate-bounce"><ShieldCheck size={24} fill="#E4C46F" /></div>
                   <div className="absolute top-[30%] left-[50%] text-teal"><MapPin size={24} fill="#008F89" /></div>
                 </div>
                 
@@ -605,10 +628,10 @@ export default function App() {
                   <h5 className="text-gray-400 text-xs uppercase tracking-widest mb-4">Feed de Ocorrências</h5>
                   <div className="space-y-4 overflow-hidden relative">
                     {[
-                      { type: 'Clima', text: 'Alerta de alagamento: Av. Agamenon', time: '2m atrás', color: 'text-red-400' },
-                      { type: 'Social', text: 'Viralização: Falta de luz no Ibura', time: '12m atrás', color: 'text-gold' },
-                      { type: 'Colab', text: 'Verificação: Buraco tapado', time: '45m atrás', color: 'text-teal' },
-                      { type: 'Sensor', text: 'Nível do rio Capibaribe normal', time: '1h atrás', color: 'text-gray-400' },
+                      { type: 'Segurança', text: 'Movimentação atípica no Centro', time: '2m atrás', color: 'text-red-400' },
+                      { type: 'Mobilidade', text: 'Congestionamento Av. Norte', time: '12m atrás', color: 'text-gold' },
+                      { type: 'Colab', text: 'Verificação: Iluminação pública', time: '45m atrás', color: 'text-teal' },
+                      { type: 'Patrimônio', text: 'Monitoramento de Ativos: Normal', time: '1h atrás', color: 'text-gray-400' },
                     ].map((item, i) => (
                       <div key={i} className="flex gap-3 text-sm border-b border-white/5 pb-2">
                         <div className={`w-1 h-full ${item.color.replace('text', 'bg')} rounded`}></div>
@@ -629,29 +652,36 @@ export default function App() {
               <div className="bg-midnight border-b border-white/5 p-4 flex items-center justify-between">
                  <div className="flex items-center gap-2 text-gold font-mono text-xs tracking-widest uppercase">
                    <div className="w-2 h-2 bg-gold rounded-full animate-pulse"></div>
-                   Korun Terminal v2.0
+                   Korun Terminal v2.1 (Behavioral Engine)
                  </div>
-                 <div className="flex gap-2">
+                 <div className="flex gap-2 flex-wrap justify-end">
                    <Button 
                       variant="ghost" 
                       onClick={() => setAiTab('thinking')}
                       className={`${aiTab === 'thinking' ? 'text-white bg-white/10' : 'text-gray-500'}`}
                    >
-                     <Cpu size={16} /> Thinking Mode
+                     <Cpu size={16} /> Reasoning
+                   </Button>
+                   <Button 
+                      variant="ghost" 
+                      onClick={() => setAiTab('behavioral')}
+                      className={`${aiTab === 'behavioral' ? 'text-white bg-white/10' : 'text-gray-500'}`}
+                   >
+                     <HeartHandshake size={16} /> Behavior Analysis
                    </Button>
                    <Button 
                       variant="ghost" 
                       onClick={() => setAiTab('tts')}
                       className={`${aiTab === 'tts' ? 'text-white bg-white/10' : 'text-gray-500'}`}
                    >
-                     <Mic size={16} /> Voice Briefing
+                     <Mic size={16} /> Briefing
                    </Button>
                    <Button 
                       variant="ghost" 
                       onClick={() => setAiTab('image')}
                       className={`${aiTab === 'image' ? 'text-white bg-white/10' : 'text-gray-500'}`}
                    >
-                     <ImageIcon size={16} /> Visual Edit
+                     <ImageIcon size={16} /> Visual
                    </Button>
                  </div>
               </div>
@@ -661,9 +691,15 @@ export default function App() {
                   {!aiOutput && !isAiProcessing && (
                     <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-4">
                       {aiTab === 'thinking' && <BrainCircuit size={48} className="text-teal/50" />}
+                      {aiTab === 'behavioral' && <HeartHandshake size={48} className="text-teal/50" />}
                       {aiTab === 'tts' && <Mic size={48} className="text-teal/50" />}
                       {aiTab === 'image' && <ImageIcon size={48} className="text-teal/50" />}
-                      <p>System Ready. Waiting for input...</p>
+                      <p className="text-center">
+                        {aiTab === 'thinking' ? "System Ready. Waiting for strategic query..." :
+                         aiTab === 'behavioral' ? "Behavioral Engine Ready. Input public sentiment data..." :
+                         aiTab === 'tts' ? "TTS Ready. Waiting for text input..." :
+                         "Visual Engine Ready. Waiting for image upload..."}
+                      </p>
                     </div>
                   )}
 
@@ -726,7 +762,8 @@ export default function App() {
                     onChange={(e) => setAiInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && executeAI()}
                     placeholder={
-                      aiTab === 'thinking' ? "Ask complex reasoning queries..." :
+                      aiTab === 'thinking' ? "Ask complex reasoning queries (e.g., 'Analyze traffic flow impact')..." :
+                      aiTab === 'behavioral' ? "Paste citizen comments (e.g., 'People are scared of walking at night on Main St')..." :
                       aiTab === 'tts' ? "Enter text to convert to speech..." :
                       "Describe how to edit the image (e.g., 'Add a retro filter')..."
                     }
@@ -742,6 +779,7 @@ export default function App() {
                    </Button>
                 </div>
                 {aiTab === 'thinking' && <p className="text-[10px] text-gray-500 mt-2 text-right">Powered by Gemini 3 Pro (Thinking Budget: 32k)</p>}
+                {aiTab === 'behavioral' && <p className="text-[10px] text-gray-500 mt-2 text-right">Powered by Gemini 3 Pro (Thinking + Behavioral Persona)</p>}
                 {aiTab === 'tts' && <p className="text-[10px] text-gray-500 mt-2 text-right">Powered by Gemini 2.5 Flash TTS</p>}
                 {aiTab === 'image' && <p className="text-[10px] text-gray-500 mt-2 text-right">Powered by Gemini 2.5 Flash Image</p>}
               </div>
@@ -772,9 +810,9 @@ export default function App() {
               <h4 className="text-white font-bold mb-6">Plataforma</h4>
               <ul className="space-y-4 text-sm text-gray-400">
                 <li><a href="#" className="hover:text-gold transition-colors">Escuta Inteligente</a></li>
-                <li><a href="#" className="hover:text-gold transition-colors">Predição Climática</a></li>
-                <li><a href="#" className="hover:text-gold transition-colors">Verificação Colab</a></li>
                 <li><a href="#" className="hover:text-gold transition-colors">Segurança Pública</a></li>
+                <li><a href="#" className="hover:text-gold transition-colors">Verificação Colab</a></li>
+                <li><a href="#" className="hover:text-gold transition-colors">Mobilidade Urbana</a></li>
               </ul>
             </div>
 
