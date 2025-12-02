@@ -1,0 +1,21 @@
+/*
+Theme Name: Korun Intelligence
+Theme URI: https://korun.com.br
+Author: Korun Team
+Author URI: https://korun.com.br
+Description: High-End Behavioral Science & GovTech Theme. React SPA powered by Gemini AI. No-Build version.
+Version: 3.3.0
+License: GNU General Public License v2 or later
+Tags: react, tailwind, ai, govtech
+Text Domain: korun-intelligence
+*/
+
+/* 
+  Reset basic margins. 
+  The actual styling is handled by Tailwind CSS (loaded in index.php).
+*/
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0A1C2F;
+}

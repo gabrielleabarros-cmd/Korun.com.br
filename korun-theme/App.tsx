@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Menu, X, ArrowRight, Activity, BrainCircuit, Users, 
@@ -1223,4 +1223,9 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+// Mount the app directly
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = createRoot(rootElement);
+  root.render(<App />);
+}

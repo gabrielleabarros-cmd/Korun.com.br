@@ -1,5 +1,5 @@
-
 import React, { useState, useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
 import { GoogleGenAI } from "@google/genai";
 import { 
   Menu, X, ArrowRight, Activity, BrainCircuit, Users, 
@@ -11,21 +11,9 @@ import {
   CloudRain, Map, Zap, Landmark, Palette, Zap as Lightning
 } from 'lucide-react';
 
-// --- Types ---
-
-type ViewState = 'home' | 'methodology' | 'papers' | 'system' | 'governance' | 'contact';
-
-type LogEntry = {
-  id: string;
-  type: 'user' | 'system' | 'image' | 'audio' | 'error';
-  content: string; // Text content or base64 data
-  timestamp: Date;
-  meta?: string; // For model name, execution time, etc.
-};
-
 // --- Assets & Icons ---
 
-const KorunLogo: React.FC<{ className?: string, dark?: boolean }> = ({ className, dark = false }) => (
+const KorunLogo = ({ className, dark = false }) => (
   <svg className={`${className}`} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="50" cy="50" r="45" stroke={dark ? "#0A1C2F" : "#F2F4F5"} strokeWidth="3" className="opacity-80"/> 
     <line x1="50" y1="5" x2="50" y2="95" stroke={dark ? "#008F89" : "#E4C46F"} strokeWidth="2"/> 
@@ -35,13 +23,9 @@ const KorunLogo: React.FC<{ className?: string, dark?: boolean }> = ({ className
   </svg>
 );
 
-const Button: React.FC<{ 
-  children: React.ReactNode; 
-  variant?: 'primary' | 'outline' | 'editorial' | 'dark' | 'ghost'; 
-  className?: string;
-  onClick?: () => void;
-  disabled?: boolean;
-}> = ({ children, variant = 'primary', className = '', onClick, disabled }) => {
+const Button = ({ 
+  children, variant = 'primary', className = '', onClick, disabled 
+}) => {
   const base = "px-6 py-3 rounded-sm font-medium transition-all duration-300 flex items-center justify-center gap-2 text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed";
   const variants = {
     primary: "bg-teal text-white hover:bg-midnight hover:shadow-lg font-bold",
@@ -60,11 +44,11 @@ const Button: React.FC<{
 
 // --- Helpers ---
 
-const blobToBase64 = (blob: Blob): Promise<string> => {
+const blobToBase64 = (blob) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onloadend = () => {
-      const result = reader.result as string;
+      const result = reader.result;
       resolve(result.split(',')[1]);
     };
     reader.onerror = reject;
@@ -72,9 +56,9 @@ const blobToBase64 = (blob: Blob): Promise<string> => {
   });
 };
 
-const playAudio = async (base64Audio: string) => {
+const playAudio = async (base64Audio) => {
   try {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const binaryString = atob(base64Audio);
     const len = binaryString.length;
     const bytes = new Uint8Array(len);
@@ -93,28 +77,20 @@ const playAudio = async (base64Audio: string) => {
 
 // --- Sub-Components ---
 
-const ClientSimulation: React.FC = () => (
+const ClientSimulation = () => (
   <div className="hidden md:block relative h-[600px] w-full">
     <div className="absolute inset-0 bg-gradient-to-t from-midnight via-transparent to-transparent z-20"></div>
     <div className="w-full h-full relative opacity-80 animate-float">
-       {/* Simulação de Constelação de Dados / Digital Twin */}
        <svg viewBox="0 0 400 400" className="w-full h-full">
-          {/* Territory Map Base */}
           <path d="M50,350 Q200,380 350,350 Q380,200 350,50 Q200,20 50,50 Q20,200 50,350" fill="none" stroke="#008F89" strokeWidth="0.5" opacity="0.3" />
-          
-          {/* Data Nodes */}
           <circle cx="100" cy="100" r="3" fill="#E4C46F" className="animate-pulse" style={{animationDelay: '0s'}} />
           <circle cx="250" cy="150" r="3" fill="#E4C46F" className="animate-pulse" style={{animationDelay: '1.5s'}} />
           <circle cx="150" cy="250" r="3" fill="#E4C46F" className="animate-pulse" style={{animationDelay: '0.8s'}} />
           <circle cx="300" cy="300" r="3" fill="#E4C46F" className="animate-pulse" style={{animationDelay: '2.2s'}} />
-          
-          {/* Connections */}
           <line x1="100" y1="100" x2="250" y2="150" stroke="#008F89" strokeWidth="0.5" opacity="0.4" />
           <line x1="250" y1="150" x2="300" y2="300" stroke="#008F89" strokeWidth="0.5" opacity="0.4" />
           <line x1="150" y1="250" x2="100" y2="100" stroke="#008F89" strokeWidth="0.5" opacity="0.4" />
           <line x1="150" y1="250" x2="300" y2="300" stroke="#008F89" strokeWidth="0.5" opacity="0.4" />
-          
-          {/* Central Hub */}
           <circle cx="200" cy="200" r="40" fill="none" stroke="#008F89" strokeWidth="1" strokeDasharray="4 4" className="animate-[spin_10s_linear_infinite]" />
           <circle cx="200" cy="200" r="10" fill="#E4C46F" opacity="0.8" />
        </svg>
@@ -122,7 +98,7 @@ const ClientSimulation: React.FC = () => (
   </div>
 );
 
-const ApiKeyModal: React.FC<{ onSave: (key: string) => void }> = ({ onSave }) => {
+const ApiKeyModal = ({ onSave }) => {
   const [key, setKey] = useState('');
 
   return (
@@ -153,13 +129,7 @@ const ApiKeyModal: React.FC<{ onSave: (key: string) => void }> = ({ onSave }) =>
   );
 };
 
-const StatWidget: React.FC<{ 
-  title: string; 
-  value: string; 
-  sub: string; 
-  trend?: string;
-  positive?: boolean;
-}> = ({ title, value, sub, trend, positive }) => (
+const StatWidget = ({ title, value, sub, trend, positive }) => (
   <div className="bg-midnight-light/50 border border-white/5 p-6 rounded hover:border-teal/50 transition-colors group backdrop-blur-md">
     <div className="flex justify-between items-start mb-3">
       <h4 className="text-gray-400 text-xs uppercase tracking-widest font-sans">{title}</h4>
@@ -174,12 +144,7 @@ const StatWidget: React.FC<{
   </div>
 );
 
-const PaperCard: React.FC<{
-  year: string;
-  title: string;
-  category: string;
-  description: string;
-}> = ({ year, title, category, description }) => (
+const PaperCard = ({ year, title, category, description }) => (
   <div className="bg-white p-8 border border-gray-200 hover:border-teal hover:shadow-xl transition-all duration-300 group cursor-pointer h-full flex flex-col">
     <div className="flex justify-between items-start mb-6">
       <span className="bg-mist-dark text-midnight px-3 py-1 text-xs font-bold uppercase tracking-wider">{category}</span>
@@ -197,12 +162,7 @@ const PaperCard: React.FC<{
   </div>
 );
 
-const SolutionCard: React.FC<{
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  tags: string[];
-}> = ({ icon, title, description, tags }) => (
+const SolutionCard = ({ icon, title, description, tags }) => (
   <div className="bg-white p-6 border border-gray-200 hover:border-gold hover:shadow-lg transition-all duration-300 group">
     <div className="w-12 h-12 bg-mist rounded-full flex items-center justify-center text-midnight mb-4 group-hover:bg-gold group-hover:text-midnight transition-colors">
       {icon}
@@ -219,13 +179,7 @@ const SolutionCard: React.FC<{
   </div>
 );
 
-const MethodologyStep: React.FC<{
-  number: string;
-  title: string;
-  text: string;
-  icon: React.ReactNode;
-  stats?: string;
-}> = ({ number, title, text, icon, stats }) => (
+const MethodologyStep = ({ number, title, text, icon, stats }) => (
   <div className="relative pl-12 pb-12 border-l border-gray-200 last:border-0 last:pb-0">
     <div className="absolute -left-5 top-0 w-10 h-10 bg-white border-2 border-teal rounded-full flex items-center justify-center text-teal font-bold shadow-sm z-10">
       {icon}
@@ -245,7 +199,7 @@ const MethodologyStep: React.FC<{
 
 // --- VIEWS ---
 
-const HomeView: React.FC<{ onChangeView: (view: ViewState) => void }> = ({ onChangeView }) => (
+const HomeView = ({ onChangeView }) => (
   <div className="animate-in fade-in duration-500">
     {/* Hero Section */}
     <section className="relative min-h-[90vh] flex items-center bg-midnight text-white overflow-hidden pt-20">
@@ -397,7 +351,7 @@ const HomeView: React.FC<{ onChangeView: (view: ViewState) => void }> = ({ onCha
   </div>
 );
 
-const MethodologyView: React.FC = () => (
+const MethodologyView = () => (
   <div className="bg-white animate-in fade-in pt-32 pb-24">
     <div className="max-w-4xl mx-auto px-6">
        <span className="text-teal font-bold tracking-widest uppercase text-xs mb-4 block">Nosso Protocolo</span>
@@ -445,7 +399,7 @@ const MethodologyView: React.FC = () => (
   </div>
 );
 
-const PapersView: React.FC = () => (
+const PapersView = () => (
   <div className="bg-mist min-h-screen pt-32 pb-24 animate-in fade-in">
     <div className="max-w-7xl mx-auto px-6">
       <h2 className="text-5xl font-serif font-bold text-midnight mb-12">Biblioteca de Conhecimento</h2>
@@ -494,25 +448,25 @@ const PapersView: React.FC = () => (
 
 // --- SYSTEM VIEW COMPONENTS (Dashboard + AI Terminal) ---
 
-const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
-  const [activeTab, setActiveTab] = useState<'overview' | 'terminal'>('overview');
+const SystemView = ({ apiKey }) => {
+  const [activeTab, setActiveTab] = useState('overview');
   
   // AI State
   const [aiInput, setAiInput] = useState('');
-  const [terminalLog, setTerminalLog] = useState<LogEntry[]>([]);
+  const [terminalLog, setTerminalLog] = useState([]);
   const [isThinking, setIsThinking] = useState(false);
-  const [aiMode, setAiMode] = useState<'thinking' | 'chat' | 'fast' | 'behavioral' | 'voice' | 'visual_gen' | 'visual_analysis'>('thinking');
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
-  const [imageSize, setImageSize] = useState<'1K' | '2K' | '4K'>('1K');
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const terminalEndRef = useRef<HTMLDivElement>(null);
+  const [aiMode, setAiMode] = useState('thinking');
+  const [uploadedImage, setUploadedImage] = useState(null);
+  const [imageSize, setImageSize] = useState('1K');
+  const fileInputRef = useRef(null);
+  const terminalEndRef = useRef(null);
 
   // Auto-scroll to bottom of terminal
   useEffect(() => {
     terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [terminalLog]);
 
-  const addToLog = (type: LogEntry['type'], content: string, meta?: string) => {
+  const addToLog = (type, content, meta) => {
     setTerminalLog(prev => [...prev, {
       id: Math.random().toString(36).substr(2, 9),
       type,
@@ -534,7 +488,7 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
     try {
       const ai = new GoogleGenAI({ apiKey });
       let responseContent = '';
-      let responseType: LogEntry['type'] = 'system';
+      let responseType = 'system';
       let metaInfo = '';
 
       if (aiMode === 'thinking') {
@@ -550,8 +504,6 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
       } 
       else if (aiMode === 'chat') {
         metaInfo = 'gemini-3-pro-preview';
-        // For a simple chat experience in this terminal, we pass history.
-        // Convert log to simple history for context (simplified)
         const history = terminalLog
           .filter(entry => entry.type === 'user' || entry.type === 'system')
           .slice(-10)
@@ -655,7 +607,7 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
     if (file) {
       blobToBase64(file).then(base64 => setUploadedImage(base64));
@@ -763,7 +715,7 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
                     ].map((mode) => (
                        <button 
                          key={mode.id}
-                         onClick={() => setAiMode(mode.id as any)}
+                         onClick={() => setAiMode(mode.id)}
                          className={`w-full text-left p-3 rounded flex items-center gap-3 transition-all ${aiMode === mode.id ? 'bg-white/10 border border-white/20' : 'hover:bg-white/5 opacity-70 hover:opacity-100'}`}
                        >
                           <mode.icon size={18} className={mode.color} />
@@ -793,7 +745,7 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
                              {['1K', '2K', '4K'].map(size => (
                                 <button
                                   key={size}
-                                  onClick={() => setImageSize(size as any)}
+                                  onClick={() => setImageSize(size)}
                                   className={`flex-1 text-xs py-1 rounded transition-colors ${imageSize === size ? 'bg-teal text-white' : 'text-gray-400 hover:text-white'}`}
                                 >
                                   {size}
@@ -891,7 +843,7 @@ const SystemView: React.FC<{ apiKey: string }> = ({ apiKey }) => {
   );
 };
 
-const GovernanceView: React.FC = () => (
+const GovernanceView = () => (
   <div className="bg-white min-h-screen pt-32 pb-24 animate-in fade-in">
     <div className="max-w-5xl mx-auto px-6">
       <h2 className="text-5xl font-serif font-bold text-midnight mb-8">Governança Figital</h2>
@@ -930,18 +882,18 @@ const GovernanceView: React.FC = () => (
   </div>
 );
 
-const ContactView: React.FC = () => {
+const ContactView = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         message: ''
     });
-    const [errors, setErrors] = useState<{[key: string]: string}>({});
+    const [errors, setErrors] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
 
     const validate = () => {
-        const newErrors: {[key: string]: string} = {};
+        const newErrors = {};
         if (!formData.name.trim()) newErrors.name = 'Nome é obrigatório';
         if (!formData.email.trim()) {
             newErrors.email = 'Email é obrigatório';
@@ -950,9 +902,6 @@ const ContactView: React.FC = () => {
         }
         if (!formData.phone.trim()) {
             newErrors.phone = 'Telefone é obrigatório';
-        } else if (!/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/.test(formData.phone.replace(/[^0-9]/g, ''))) {
-             // Basic loose validation or just check length
-             if (formData.phone.length < 10) newErrors.phone = 'Telefone inválido';
         }
         if (!formData.message.trim()) newErrors.message = 'Mensagem é obrigatória';
         
@@ -960,17 +909,16 @@ const ContactView: React.FC = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            // Simulate API call
             setTimeout(() => {
                 setIsSubmitted(true);
             }, 1000);
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
         if (errors[e.target.name]) {
             setErrors({ ...errors, [e.target.name]: '' });
@@ -1069,8 +1017,8 @@ const ContactView: React.FC = () => {
 
 // --- MAIN APP COMPONENT ---
 
-const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<ViewState>('home');
+const App = () => {
+  const [currentView, setCurrentView] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [showKeyModal, setShowKeyModal] = useState(false);
@@ -1080,19 +1028,16 @@ const App: React.FC = () => {
     const storedKey = localStorage.getItem('gemini_api_key');
     if (storedKey) {
       setApiKey(storedKey);
-    } else {
-      // Only show modal if trying to access system view, or maybe on a dedicated button
-      // For this demo, let's keep it unintrusive until needed
     }
   }, []);
 
-  const handleSaveKey = (key: string) => {
+  const handleSaveKey = (key) => {
     localStorage.setItem('gemini_api_key', key);
     setApiKey(key);
     setShowKeyModal(false);
   };
 
-  const NavLink: React.FC<{ view: ViewState, label: string }> = ({ view, label }) => (
+  const NavLink = ({ view, label }) => (
     <button 
       onClick={() => { setCurrentView(view); setIsMenuOpen(false); }}
       className={`text-sm font-medium tracking-wide transition-colors ${
@@ -1159,6 +1104,9 @@ const App: React.FC = () => {
             <NavLink view="governance" label="Governança" />
             <NavLink view="system" label="O Sistema" />
             <NavLink view="contact" label="Contato" />
+            <div className="pt-4 border-t border-gray-100">
+               <Button className="w-full" onClick={() => { setCurrentView('contact'); setIsMenuOpen(false); }}>Fale Conosco</Button>
+            </div>
           </div>
         )}
       </nav>
@@ -1187,40 +1135,4 @@ const App: React.FC = () => {
             <div className="flex gap-4">
               <a href="#" className="text-gray-500 hover:text-teal"><Globe size={20}/></a>
               <a href="#" className="text-gray-500 hover:text-teal"><MessageSquare size={20}/></a>
-              <a href="#" className="text-gray-500 hover:text-teal"><Share2 size={20}/></a>
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="font-bold text-white mb-6 font-display">Soluções</h4>
-            <ul className="space-y-4 text-gray-400 text-sm">
-              <li className="hover:text-gold cursor-pointer">CIT: Centro de Inteligência</li>
-              <li className="hover:text-gold cursor-pointer">SPR: Sistema de Predição</li>
-              <li className="hover:text-gold cursor-pointer">Auditoria Colaborativa (Colab)</li>
-              <li className="hover:text-gold cursor-pointer">Inteligência Turística</li>
-              <li className="hover:text-gold cursor-pointer">Soluções Figitais</li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-bold text-white mb-6 font-display">Institucional</h4>
-            <ul className="space-y-4 text-gray-400 text-sm">
-              <li className="hover:text-gold cursor-pointer" onClick={() => setCurrentView('papers')}>Trend Report 2026</li>
-              <li className="hover:text-gold cursor-pointer" onClick={() => setCurrentView('methodology')}>Metodologia Científica</li>
-              <li className="hover:text-gold cursor-pointer" onClick={() => setCurrentView('governance')}>Modelo de Governança</li>
-              <li className="hover:text-gold cursor-pointer" onClick={() => setCurrentView('contact')}>Contato</li>
-            </ul>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-white/5 text-center text-gray-600 text-xs font-mono">
-          © 2026 Korun Intelligence. Todos os direitos reservados. Recife • Brasil.
-        </div>
-      </footer>
-
-      {/* Modals */}
-      {showKeyModal && <ApiKeyModal onSave={handleSaveKey} />}
-    </div>
-  );
-};
-
-export default App;
+              <a href="#" className
