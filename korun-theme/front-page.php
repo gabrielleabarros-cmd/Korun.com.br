@@ -86,7 +86,7 @@ get_header();
 			<h2 class="k-section-title"><?php esc_html_e( 'Da leitura à decisão.', 'korun' ); ?></h2>
 		</div>
 
-		<div id="produtos" class="k-cards-4">
+		<div class="k-cards-4">
 
 			<a class="k-card" href="#contato">
 				<span class="k-card__icon">
@@ -219,6 +219,74 @@ get_header();
 				<h3 class="k-step__title"><?php esc_html_e( 'Orientamos', 'korun' ); ?></h3>
 				<p class="k-step__text"><?php esc_html_e( 'Entregamos clareza e recomendações para decisões melhores.', 'korun' ); ?></p>
 			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- ============================ PRODUTOS ============================ -->
+<section id="produtos" class="k-products">
+	<div class="k-container">
+		<div class="k-products__head">
+			<span class="k-eyebrow"><?php esc_html_e( 'Produtos', 'korun' ); ?></span>
+			<h2 class="k-section-title"><?php esc_html_e( 'Tecnologia que transforma sinais em ação.', 'korun' ); ?></h2>
+		</div>
+
+		<div class="k-cards-3">
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 10a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H18l-8 8v-8h-0a4 4 0 0 1-4-4V10z" stroke-linejoin="round"/><circle cx="15" cy="18" r="1.8" fill="currentColor" stroke="none"/><circle cx="22" cy="18" r="1.8" fill="currentColor" stroke="none"/><circle cx="29" cy="18" r="1.8" fill="currentColor" stroke="none"/></svg>
+				</span>
+				<h3 class="k-card__title">KORUN <span class="is-blue">CHAT</span><span class="k-badge"><?php esc_html_e( 'Novo', 'korun' ); ?></span></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Converse com a inteligência da Korun: pergunte sobre sinais, riscos e narrativas e receba respostas em tempo real.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 4L10 26h10l-2 14 16-24H23l1-12z" stroke-linejoin="round"/></svg>
+				</span>
+				<h3 class="k-card__title">POWER ADS <span class="is-blue">PRO</span><span class="k-badge"><?php esc_html_e( 'Novo', 'korun' ); ?></span></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Gestão e otimização de campanhas orientadas por sinais, para investir onde a conversa realmente acontece.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="22" cy="22" r="16"/><path d="M22 22L33 13" stroke-linecap="round"/><circle cx="22" cy="22" r="2.5" fill="currentColor" stroke="none"/><path d="M22 6v4M38 22h-4M22 38v-4M6 22h4" stroke-linecap="round"/></svg>
+				</span>
+				<h3 class="k-card__title"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Painel de monitoramento contínuo com visão geral de sinais, menções e tendências.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4h14l8 8v28H12V4z" stroke-linejoin="round"/><path d="M26 4v8h8M18 22h10M18 28h10M18 34h6" stroke-linecap="round"/></svg>
+				</span>
+				<h3 class="k-card__title"><?php esc_html_e( 'Relatórios', 'korun' ); ?></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Relatórios estratégicos periódicos com leitura do cenário e recomendações práticas.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8L4 12v24l12-4 12 4 12-4V8l-12 4-12-4z" stroke-linejoin="round"/><path d="M16 8v24M28 12v24"/></svg>
+				</span>
+				<h3 class="k-card__title"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Visualização territorial de riscos e oportunidades por cidade e região.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
+
+			<a class="k-card" href="#contato">
+				<span class="k-card__icon">
+					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 6a11 11 0 0 1 11 11c0 8 3 10 3 10H8s3-2 3-10A11 11 0 0 1 22 6z" stroke-linejoin="round"/><path d="M18 33a4 4 0 0 0 8 0" stroke-linecap="round"/></svg>
+				</span>
+				<h3 class="k-card__title"><?php esc_html_e( 'Alertas Inteligentes', 'korun' ); ?></h3>
+				<p class="k-card__text"><?php esc_html_e( 'Avisos automáticos quando um sinal relevante muda de comportamento.', 'korun' ); ?></p>
+				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
+			</a>
 
 		</div>
 	</div>

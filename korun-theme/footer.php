@@ -52,6 +52,8 @@ $korun_home = esc_url( home_url( '/' ) );
 			<div>
 				<h3 class="k-footer__title"><?php esc_html_e( 'Produtos', 'korun' ); ?></h3>
 				<ul>
+					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
 					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
 					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
 					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>

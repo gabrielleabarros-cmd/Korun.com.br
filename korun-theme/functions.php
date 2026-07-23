@@ -90,6 +90,8 @@ function korun_default_menu() {
 		<li class="k-has-sub">
 			<a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Produtos', 'korun' ); ?> <svg class="k-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></a>
 			<ul>
+				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
 				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
 				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
 				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>
