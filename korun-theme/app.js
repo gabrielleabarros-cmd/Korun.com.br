@@ -32,7 +32,7 @@ import {
   Palette,
   Zap as Lightning
 } from "lucide-react";
-import { jsx, jsxs } from "react/jsx-runtime";
+import { Fragment, jsx, jsxs } from "react/jsx-runtime";
 var KorunLogo = ({ className, dark = false }) => /* @__PURE__ */ jsxs("svg", { className: `${className}`, viewBox: "0 0 100 100", fill: "none", xmlns: "http://www.w3.org/2000/svg", children: [
   /* @__PURE__ */ jsx("circle", { cx: "50", cy: "50", r: "45", stroke: dark ? "#0A1C2F" : "#F2F4F5", strokeWidth: "3", className: "opacity-80" }),
   /* @__PURE__ */ jsx("line", { x1: "50", y1: "5", x2: "50", y2: "95", stroke: dark ? "#008F89" : "#E4C46F", strokeWidth: "2" }),
@@ -759,6 +759,8 @@ var ContactView = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSending, setIsSending] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const validate = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Nome \xE9 obrigat\xF3rio";
@@ -776,12 +778,24 @@ var ContactView = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      setTimeout(() => {
-        setIsSubmitted(true);
-      }, 1e3);
+    if (!validate()) return;
+    setIsSending(true);
+    setSubmitError("");
+    try {
+      const restUrl = window.korunData?.restUrl || "/wp-json/";
+      const res = await fetch(restUrl + "korun/v1/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      setIsSubmitted(true);
+    } catch {
+      setSubmitError("N\xE3o foi poss\xEDvel enviar sua mensagem. Tente novamente ou fale conosco pelo telefone abaixo.");
+    } finally {
+      setIsSending(false);
     }
   };
   const handleChange = (e) => {
@@ -866,10 +880,14 @@ var ContactView = () => {
         ),
         errors.message && /* @__PURE__ */ jsx("span", { className: "text-red-500 text-xs", children: errors.message })
       ] }),
-      /* @__PURE__ */ jsxs(Button, { variant: "dark", className: "w-full py-4 text-base", children: [
+      submitError && /* @__PURE__ */ jsx("div", { className: "bg-red-500/10 border border-red-500/50 rounded px-4 py-3 text-red-400 text-sm", children: submitError }),
+      /* @__PURE__ */ jsx(Button, { variant: "dark", className: "w-full py-4 text-base", disabled: isSending, children: isSending ? /* @__PURE__ */ jsxs(Fragment, { children: [
+        "Enviando... ",
+        /* @__PURE__ */ jsx(Loader2, { size: 20, className: "animate-spin" })
+      ] }) : /* @__PURE__ */ jsxs(Fragment, { children: [
         "Enviar Mensagem ",
         /* @__PURE__ */ jsx(ChevronRight, { size: 20 })
-      ] }),
+      ] }) }),
       /* @__PURE__ */ jsxs("div", { className: "pt-6 border-t border-white/10 flex justify-center gap-8 text-sm text-gray-400", children: [
         /* @__PURE__ */ jsxs("span", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ jsx(Phone, { size: 16 }),

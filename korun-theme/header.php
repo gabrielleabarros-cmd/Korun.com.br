@@ -117,6 +117,8 @@
     }
     </script>
 
+    <script>window.korunData = { restUrl: "<?php echo esc_url_raw( rest_url() ); ?>" };</script>
+
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>

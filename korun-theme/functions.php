@@ -35,6 +35,37 @@ function korun_enqueue_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'korun_enqueue_assets' );
 
+// Contact form endpoint: receives the SPA form and emails it to the site admin.
+add_action( 'rest_api_init', function () {
+	register_rest_route( 'korun/v1', '/contact', array(
+		'methods'             => 'POST',
+		'permission_callback' => '__return_true',
+		'callback'            => 'korun_handle_contact',
+	) );
+} );
+
+function korun_handle_contact( WP_REST_Request $request ) {
+	$name    = sanitize_text_field( (string) $request->get_param( 'name' ) );
+	$email   = sanitize_email( (string) $request->get_param( 'email' ) );
+	$phone   = sanitize_text_field( (string) $request->get_param( 'phone' ) );
+	$message = sanitize_textarea_field( (string) $request->get_param( 'message' ) );
+
+	if ( '' === $name || ! is_email( $email ) || '' === $message ) {
+		return new WP_Error( 'korun_invalid_data', 'Dados inválidos.', array( 'status' => 400 ) );
+	}
+
+	$to      = get_option( 'admin_email' );
+	$subject = 'Novo contato pelo site — ' . $name;
+	$body    = "Nome: {$name}\nEmail: {$email}\nTelefone: {$phone}\n\nMensagem:\n{$message}";
+	$headers = array( 'Reply-To: ' . $name . ' <' . $email . '>' );
+
+	if ( ! wp_mail( $to, $subject, $body, $headers ) ) {
+		return new WP_Error( 'korun_send_failed', 'Falha no envio.', array( 'status' => 500 ) );
+	}
+
+	return array( 'success' => true );
+}
+
 function korun_module_script_tag( $tag, $handle, $src ) {
 	if ( 'korun-app' === $handle ) {
 		$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>' . "\n";

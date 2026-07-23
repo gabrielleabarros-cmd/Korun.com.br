@@ -939,6 +939,8 @@ const ContactView: React.FC = () => {
     });
     const [errors, setErrors] = useState<{[key: string]: string}>({});
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [isSending, setIsSending] = useState(false);
+    const [submitError, setSubmitError] = useState('');
 
     const validate = () => {
         const newErrors: {[key: string]: string} = {};
@@ -960,13 +962,24 @@ const ContactView: React.FC = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (validate()) {
-            // Simulate API call
-            setTimeout(() => {
-                setIsSubmitted(true);
-            }, 1000);
+        if (!validate()) return;
+        setIsSending(true);
+        setSubmitError('');
+        try {
+            const restUrl = (window as any).korunData?.restUrl || '/wp-json/';
+            const res = await fetch(restUrl + 'korun/v1/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            setIsSubmitted(true);
+        } catch {
+            setSubmitError('Não foi possível enviar sua mensagem. Tente novamente ou fale conosco pelo telefone abaixo.');
+        } finally {
+            setIsSending(false);
         }
     };
 
@@ -1052,8 +1065,14 @@ const ContactView: React.FC = () => {
                             {errors.message && <span className="text-red-500 text-xs">{errors.message}</span>}
                         </div>
 
-                        <Button variant="dark" className="w-full py-4 text-base">
-                            Enviar Mensagem <ChevronRight size={20}/>
+                        {submitError && (
+                            <div className="bg-red-500/10 border border-red-500/50 rounded px-4 py-3 text-red-400 text-sm">
+                                {submitError}
+                            </div>
+                        )}
+
+                        <Button variant="dark" className="w-full py-4 text-base" disabled={isSending}>
+                            {isSending ? <>Enviando... <Loader2 size={20} className="animate-spin"/></> : <>Enviar Mensagem <ChevronRight size={20}/></>}
                         </Button>
                         
                          <div className="pt-6 border-t border-white/10 flex justify-center gap-8 text-sm text-gray-400">
