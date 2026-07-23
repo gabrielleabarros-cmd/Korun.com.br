@@ -42,42 +42,42 @@ $korun_home = esc_url( home_url( '/' ) );
 			<div>
 				<h3 class="k-footer__title"><?php esc_html_e( 'Soluções', 'korun' ); ?></h3>
 				<ul>
-					<li><a href="<?php echo $korun_home; ?>#solucoes"><?php esc_html_e( 'Korun Sprint', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#solucoes"><?php esc_html_e( 'Korun Radar', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#solucoes"><?php esc_html_e( 'Korun Crisis', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#solucoes"><?php esc_html_e( 'Korun Advisory', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>solucoes/#sprint"><?php esc_html_e( 'Korun Sprint', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>solucoes/#radar"><?php esc_html_e( 'Korun Radar', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>solucoes/#crisis"><?php esc_html_e( 'Korun Crisis', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>solucoes/#advisory"><?php esc_html_e( 'Korun Advisory', 'korun' ); ?></a></li>
 				</ul>
 			</div>
 
 			<div>
 				<h3 class="k-footer__title"><?php esc_html_e( 'Produtos', 'korun' ); ?></h3>
 				<ul>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#produtos"><?php esc_html_e( 'Alertas Inteligentes', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#chat"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#power-ads"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#radar"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#relatorios"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#mapas"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#alertas"><?php esc_html_e( 'Alertas Inteligentes', 'korun' ); ?></a></li>
 				</ul>
 			</div>
 
 			<div>
 				<h3 class="k-footer__title"><?php esc_html_e( 'Recursos', 'korun' ); ?></h3>
 				<ul>
-					<li><a href="<?php echo $korun_home; ?>#insights"><?php esc_html_e( 'Insights', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#insights"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#insights"><?php esc_html_e( 'Blog', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#insights"><?php esc_html_e( 'Eventos', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>insights/"><?php esc_html_e( 'Insights', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>produtos/#relatorios"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>insights/"><?php esc_html_e( 'Blog', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>insights/"><?php esc_html_e( 'Eventos', 'korun' ); ?></a></li>
 				</ul>
 			</div>
 
 			<div>
 				<h3 class="k-footer__title"><?php esc_html_e( 'Institucional', 'korun' ); ?></h3>
 				<ul>
-					<li><a href="<?php echo $korun_home; ?>#quem-somos"><?php esc_html_e( 'Quem Somos', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#como-funciona"><?php esc_html_e( 'Metodologia', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#para-quem"><?php esc_html_e( 'Cases', 'korun' ); ?></a></li>
-					<li><a href="<?php echo $korun_home; ?>#contato"><?php esc_html_e( 'Carreiras', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>quem-somos/"><?php esc_html_e( 'Quem Somos', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>quem-somos/#metodologia"><?php esc_html_e( 'Metodologia', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>quem-somos/"><?php esc_html_e( 'Cases', 'korun' ); ?></a></li>
+					<li><a href="<?php echo $korun_home; ?>contato/"><?php esc_html_e( 'Carreiras', 'korun' ); ?></a></li>
 				</ul>
 			</div>
 
@@ -88,7 +88,7 @@ $korun_home = esc_url( home_url( '/' ) );
 					<li><a href="mailto:<?php echo esc_attr( korun_mod( 'email' ) ); ?>"><?php echo esc_html( korun_mod( 'email' ) ); ?></a></li>
 					<li><?php echo esc_html( korun_mod( 'endereco' ) ); ?></li>
 				</ul>
-				<a class="k-btn k-btn--outline" href="mailto:<?php echo esc_attr( korun_mod( 'email' ) ); ?>">
+				<a class="k-btn k-btn--outline" href="<?php echo $korun_home; ?>contato/">
 					<?php esc_html_e( 'Falar com a Korun', 'korun' ); ?>
 					<?php korun_arrow_icon(); ?>
 				</a>

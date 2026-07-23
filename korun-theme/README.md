@@ -1,6 +1,17 @@
 # Korun Inteligência — Tema WordPress
 
-Tema WordPress clássico (PHP puro, sem build) que implementa a landing page da Korun: **"Inteligência de sinais para decisão."**
+Tema WordPress clássico (PHP puro, sem build) que implementa o site da Korun: **"Inteligência de sinais para decisão."**
+
+## Identidade visual (manual de marca)
+
+- **Paleta**: Carvão `#111111` · Sinal `#2555FF` · Alerta `#FF5A1F` · Base `#F2F0EA` · Concreto `#B9B9B4`. O estilo claro (padrão) usa a Base como fundo; o escuro usa o Carvão.
+- **Logo**: "K" na cor do texto com quadrado azul Sinal (SVG embutido). Para usar o arquivo oficial, envie-o em Aparência → Personalizar → Identidade do site — o mesmo lugar aceita o favicon ("ícone do site").
+- **Tipografia**: o manual pede **Neue Montreal Bold** (fonte licenciada). O tema carrega a **Instrument Sans** (Google Fonts) como equivalente livre; quando tiver a licença, adicione os `@font-face` da Neue Montreal em `style.css` e troque o primeiro nome em `--k-font`.
+- **Tagline**: "Leia o ambiente. Decida o próximo movimento." — aplicada no banner de CTA.
+
+## Páginas internas
+
+Na ativação, o tema cria automaticamente: **Home** (landing), **Soluções** (`/solucoes/`), **Produtos** (`/produtos/`), **Quem Somos** (`/quem-somos/`), **Insights** (blog, `/insights/`), **Contato** (`/contato/`, com formulário enviado via `wp_mail` para o e-mail configurado no Personalizar), **Política de Privacidade** e **Termos de Uso** (rascunhos para editar). O menu padrão e o rodapé já apontam para elas.
 
 ## Seções da página inicial
 

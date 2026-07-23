@@ -50,10 +50,10 @@
 
 		function pickColor() {
 			var r = Math.random();
-			if (r < 0.1) { return lightTheme ? '#2563eb' : '#3b82f6'; } // azul
-			if (r < 0.16) { return '#f97316'; }                          // laranja
-			if (r < 0.5) { return lightTheme ? '#a3adbd' : '#6b7280'; } // cinza
-			return lightTheme ? '#475569' : '#d1d5db';                   // contraste
+			if (r < 0.1) { return lightTheme ? '#2555FF' : '#4d78ff'; } // azul
+			if (r < 0.16) { return '#FF5A1F'; }                          // laranja
+			if (r < 0.5) { return lightTheme ? '#b9b9b4' : '#8a8a85'; } // cinza
+			return lightTheme ? '#55544e' : '#e8e6df';                   // contraste
 		}
 
 		function build() {

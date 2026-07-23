@@ -21,7 +21,7 @@ get_header();
 			</h1>
 			<p class="k-hero__lead"><?php echo esc_html( korun_mod( 'hero_texto' ) ); ?></p>
 			<div class="k-hero__actions">
-				<a class="k-btn k-btn--primary" href="#solucoes"><?php esc_html_e( 'Conheça o Korun Sprint', 'korun' ); ?></a>
+				<a class="k-btn k-btn--primary" href="<?php echo esc_url( home_url( '/solucoes/#sprint' ) ); ?>"><?php esc_html_e( 'Conheça o Korun Sprint', 'korun' ); ?></a>
 				<a class="k-btn k-btn--outline" href="#como-funciona">
 					<?php esc_html_e( 'Como funciona', 'korun' ); ?>
 					<?php korun_arrow_icon(); ?>
@@ -88,7 +88,7 @@ get_header();
 
 		<div class="k-cards-4">
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/solucoes/#sprint' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 14V8a2 2 0 0 1 2-2h6M30 6h6a2 2 0 0 1 2 2v6M38 30v6a2 2 0 0 1-2 2h-6M14 38H8a2 2 0 0 1-2-2v-6"/><rect x="17" y="17" width="10" height="10" fill="currentColor" stroke="none"/></svg>
 				</span>
@@ -97,7 +97,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/solucoes/#radar' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="22" cy="22" r="16"/><circle cx="22" cy="22" r="9" stroke-dasharray="3 4"/><circle cx="22" cy="22" r="3.5" fill="currentColor" stroke="none"/></svg>
 				</span>
@@ -106,7 +106,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/solucoes/#crisis' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 6L40 38H4L22 6z"/><path d="M22 18v8" stroke-linecap="round"/><circle cx="22" cy="31" r="1.6" fill="currentColor" stroke="none"/></svg>
 				</span>
@@ -115,7 +115,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/solucoes/#advisory' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="15" cy="15" r="5"/><circle cx="29" cy="15" r="5"/><path d="M5 36c0-6 4.5-10 10-10s10 4 10 10M25 27.5c1.3-.95 2.9-1.5 4.6-1.5 5 0 9.4 4 9.4 10"/></svg>
 				</span>
@@ -234,7 +234,7 @@ get_header();
 
 		<div class="k-cards-3">
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#chat' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 10a4 4 0 0 1 4-4h24a4 4 0 0 1 4 4v16a4 4 0 0 1-4 4H18l-8 8v-8h-0a4 4 0 0 1-4-4V10z" stroke-linejoin="round"/><circle cx="15" cy="18" r="1.8" fill="currentColor" stroke="none"/><circle cx="22" cy="18" r="1.8" fill="currentColor" stroke="none"/><circle cx="29" cy="18" r="1.8" fill="currentColor" stroke="none"/></svg>
 				</span>
@@ -243,7 +243,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#power-ads' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M24 4L10 26h10l-2 14 16-24H23l1-12z" stroke-linejoin="round"/></svg>
 				</span>
@@ -252,7 +252,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#radar' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="22" cy="22" r="16"/><path d="M22 22L33 13" stroke-linecap="round"/><circle cx="22" cy="22" r="2.5" fill="currentColor" stroke="none"/><path d="M22 6v4M38 22h-4M22 38v-4M6 22h4" stroke-linecap="round"/></svg>
 				</span>
@@ -261,7 +261,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#relatorios' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4h14l8 8v28H12V4z" stroke-linejoin="round"/><path d="M26 4v8h8M18 22h10M18 28h10M18 34h6" stroke-linecap="round"/></svg>
 				</span>
@@ -270,7 +270,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#mapas' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8L4 12v24l12-4 12 4 12-4V8l-12 4-12-4z" stroke-linejoin="round"/><path d="M16 8v24M28 12v24"/></svg>
 				</span>
@@ -279,7 +279,7 @@ get_header();
 				<span class="k-card__arrow"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10h13m0 0l-5-5m5 5l-5 5"/></svg></span>
 			</a>
 
-			<a class="k-card" href="#contato">
+			<a class="k-card" href="<?php echo esc_url( home_url( '/produtos/#alertas' ) ); ?>">
 				<span class="k-card__icon">
 					<svg viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 6a11 11 0 0 1 11 11c0 8 3 10 3 10H8s3-2 3-10A11 11 0 0 1 22 6z" stroke-linejoin="round"/><path d="M18 33a4 4 0 0 0 8 0" stroke-linecap="round"/></svg>
 				</span>
@@ -300,14 +300,14 @@ get_header();
 		<div class="k-cards-4">
 
 			<article class="k-audience">
-				<div class="k-audience__media" style="background-image: linear-gradient(160deg, #23262e 0%, #101218 55%, #0a0b0f 100%);"></div>
+				<div class="k-audience__media" style="background-image: linear-gradient(160deg, #23262e 0%, #191918 55%, #0a0b0f 100%);"></div>
 				<div class="k-audience__body">
 					<span class="k-audience__icon">
 						<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 15L20 6l16 9M7 15v14m6-14v14m8-14v14m6-14v14m6-14v14M4 33h32" stroke-linecap="round" stroke-linejoin="round"/></svg>
 					</span>
 					<h3 class="k-audience__title"><?php esc_html_e( 'Governos', 'korun' ); ?></h3>
 					<p class="k-audience__text"><?php esc_html_e( 'Antecipe crises, compreenda o território e fortaleça a confiança da sociedade.', 'korun' ); ?></p>
-					<a class="k-audience__link" href="#contato"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+					<a class="k-audience__link" href="<?php echo esc_url( home_url( '/contato/' ) ); ?>"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 				</div>
 			</article>
 
@@ -319,19 +319,19 @@ get_header();
 					</span>
 					<h3 class="k-audience__title"><?php esc_html_e( 'Marcas', 'korun' ); ?></h3>
 					<p class="k-audience__text"><?php esc_html_e( 'Proteja sua reputação, entenda a conversa e transforme sinais em vantagem competitiva.', 'korun' ); ?></p>
-					<a class="k-audience__link" href="#contato"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+					<a class="k-audience__link" href="<?php echo esc_url( home_url( '/contato/' ) ); ?>"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 				</div>
 			</article>
 
 			<article class="k-audience">
-				<div class="k-audience__media" style="background-image: linear-gradient(140deg, #262932 0%, #12141b 55%, #0a0b0f 100%);"></div>
+				<div class="k-audience__media" style="background-image: linear-gradient(140deg, #262932 0%, #1d1d1b 55%, #0a0b0f 100%);"></div>
 				<div class="k-audience__body">
 					<span class="k-audience__icon">
 						<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 4l13 5v10c0 8-5.4 14.6-13 17C12.4 33.6 7 27 7 19V9l13-5z" stroke-linejoin="round"/></svg>
 					</span>
 					<h3 class="k-audience__title"><?php esc_html_e( 'Instituições', 'korun' ); ?></h3>
 					<p class="k-audience__text"><?php esc_html_e( 'Acompanhe riscos, oportunidades e narrativas que impactam sua missão.', 'korun' ); ?></p>
-					<a class="k-audience__link" href="#contato"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+					<a class="k-audience__link" href="<?php echo esc_url( home_url( '/contato/' ) ); ?>"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 				</div>
 			</article>
 
@@ -343,7 +343,7 @@ get_header();
 					</span>
 					<h3 class="k-audience__title"><?php esc_html_e( 'Agências', 'korun' ); ?></h3>
 					<p class="k-audience__text"><?php esc_html_e( 'Entregue mais estratégia e valor aos seus clientes com inteligência de sinais contínua.', 'korun' ); ?></p>
-					<a class="k-audience__link" href="#contato"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+					<a class="k-audience__link" href="<?php echo esc_url( home_url( '/contato/' ) ); ?>"><?php esc_html_e( 'Saiba mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 				</div>
 			</article>
 
@@ -371,7 +371,7 @@ get_header();
 					<article class="k-insight">
 						<div class="k-insight__media" <?php if ( has_post_thumbnail( $korun_post->ID ) ) : ?>style="background-image:url('<?php echo esc_url( get_the_post_thumbnail_url( $korun_post->ID, 'medium_large' ) ); ?>');"<?php endif; ?>>
 							<?php if ( ! has_post_thumbnail( $korun_post->ID ) ) : ?>
-								<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#12141b"/><g fill="#3b82f6"><circle cx="25" cy="110" r="2"/><circle cx="50" cy="95" r="2.5"/><circle cx="75" cy="105" r="2"/><circle cx="100" cy="80" r="2.5"/><circle cx="125" cy="90" r="2"/><circle cx="40" cy="60" r="1.5" opacity=".6"/><circle cx="90" cy="45" r="1.5" opacity=".6"/><circle cx="115" cy="55" r="1.5" opacity=".6"/></g></svg>
+								<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#1d1d1b"/><g fill="#4d78ff"><circle cx="25" cy="110" r="2"/><circle cx="50" cy="95" r="2.5"/><circle cx="75" cy="105" r="2"/><circle cx="100" cy="80" r="2.5"/><circle cx="125" cy="90" r="2"/><circle cx="40" cy="60" r="1.5" opacity=".6"/><circle cx="90" cy="45" r="1.5" opacity=".6"/><circle cx="115" cy="55" r="1.5" opacity=".6"/></g></svg>
 							<?php endif; ?>
 						</div>
 						<div class="k-insight__body">
@@ -387,34 +387,34 @@ get_header();
 
 				<article class="k-insight">
 					<div class="k-insight__media">
-						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#0d0f14"/><g fill="#3b82f6"><circle cx="20" cy="115" r="2"/><circle cx="45" cy="100" r="2.5"/><circle cx="70" cy="108" r="2"/><circle cx="95" cy="85" r="2.5"/><circle cx="120" cy="95" r="2"/><circle cx="140" cy="75" r="2"/></g><g fill="#f97316"><circle cx="60" cy="70" r="2"/><circle cx="105" cy="60" r="2"/></g><g fill="#4b5563"><circle cx="30" cy="80" r="1.3"/><circle cx="85" cy="50" r="1.3"/><circle cx="130" cy="40" r="1.3"/><circle cx="50" cy="40" r="1.3"/></g></svg>
+						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#161615"/><g fill="#4d78ff"><circle cx="20" cy="115" r="2"/><circle cx="45" cy="100" r="2.5"/><circle cx="70" cy="108" r="2"/><circle cx="95" cy="85" r="2.5"/><circle cx="120" cy="95" r="2"/><circle cx="140" cy="75" r="2"/></g><g fill="#FF5A1F"><circle cx="60" cy="70" r="2"/><circle cx="105" cy="60" r="2"/></g><g fill="#6e6e68"><circle cx="30" cy="80" r="1.3"/><circle cx="85" cy="50" r="1.3"/><circle cx="130" cy="40" r="1.3"/><circle cx="50" cy="40" r="1.3"/></g></svg>
 					</div>
 					<div class="k-insight__body">
 						<p class="k-insight__kicker"><?php esc_html_e( 'Artigo', 'korun' ); ?></p>
 						<h3 class="k-insight__title"><?php esc_html_e( '5 sinais que indicam uma crise antes de explodir', 'korun' ); ?></h3>
-						<a class="k-insight__link" href="#contato"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+						<a class="k-insight__link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 					</div>
 				</article>
 
 				<article class="k-insight">
 					<div class="k-insight__media">
-						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#101218"/><g fill="#1c1f28"><rect x="20" y="35" width="34" height="115"/><rect x="62" y="15" width="40" height="135"/><rect x="110" y="50" width="28" height="100"/></g><g fill="#2a2e3a"><rect x="26" y="45" width="6" height="8"/><rect x="38" y="45" width="6" height="8"/><rect x="26" y="60" width="6" height="8"/><rect x="38" y="60" width="6" height="8"/><rect x="70" y="28" width="7" height="9"/><rect x="84" y="28" width="7" height="9"/><rect x="70" y="46" width="7" height="9"/><rect x="84" y="46" width="7" height="9"/><rect x="70" y="64" width="7" height="9"/><rect x="84" y="64" width="7" height="9"/><rect x="116" y="60" width="5" height="7"/><rect x="126" y="60" width="5" height="7"/><rect x="116" y="74" width="5" height="7"/><rect x="126" y="74" width="5" height="7"/></g></svg>
+						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#191918"/><g fill="#262624"><rect x="20" y="35" width="34" height="115"/><rect x="62" y="15" width="40" height="135"/><rect x="110" y="50" width="28" height="100"/></g><g fill="#343431"><rect x="26" y="45" width="6" height="8"/><rect x="38" y="45" width="6" height="8"/><rect x="26" y="60" width="6" height="8"/><rect x="38" y="60" width="6" height="8"/><rect x="70" y="28" width="7" height="9"/><rect x="84" y="28" width="7" height="9"/><rect x="70" y="46" width="7" height="9"/><rect x="84" y="46" width="7" height="9"/><rect x="70" y="64" width="7" height="9"/><rect x="84" y="64" width="7" height="9"/><rect x="116" y="60" width="5" height="7"/><rect x="126" y="60" width="5" height="7"/><rect x="116" y="74" width="5" height="7"/><rect x="126" y="74" width="5" height="7"/></g></svg>
 					</div>
 					<div class="k-insight__body">
 						<p class="k-insight__kicker"><?php esc_html_e( 'Relatório', 'korun' ); ?></p>
 						<h3 class="k-insight__title"><?php esc_html_e( 'Panorama da reputação digital no setor público em 2026', 'korun' ); ?></h3>
-						<a class="k-insight__link" href="#contato"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+						<a class="k-insight__link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 					</div>
 				</article>
 
 				<article class="k-insight">
 					<div class="k-insight__media">
-						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#0d0f14"/><g fill="#2563eb"><rect x="16" y="110" width="9" height="25" rx="1.5"/><rect x="30" y="100" width="9" height="35" rx="1.5"/><rect x="44" y="92" width="9" height="43" rx="1.5"/><rect x="58" y="80" width="9" height="55" rx="1.5"/><rect x="72" y="86" width="9" height="49" rx="1.5"/><rect x="86" y="66" width="9" height="69" rx="1.5"/><rect x="100" y="52" width="9" height="83" rx="1.5"/><rect x="114" y="38" width="9" height="97" rx="1.5"/><rect x="128" y="24" width="9" height="111" rx="1.5" fill="#3b82f6"/></g></svg>
+						<svg viewBox="0 0 150 150" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="150" height="150" fill="#161615"/><g fill="#2555FF"><rect x="16" y="110" width="9" height="25" rx="1.5"/><rect x="30" y="100" width="9" height="35" rx="1.5"/><rect x="44" y="92" width="9" height="43" rx="1.5"/><rect x="58" y="80" width="9" height="55" rx="1.5"/><rect x="72" y="86" width="9" height="49" rx="1.5"/><rect x="86" y="66" width="9" height="69" rx="1.5"/><rect x="100" y="52" width="9" height="83" rx="1.5"/><rect x="114" y="38" width="9" height="97" rx="1.5"/><rect x="128" y="24" width="9" height="111" rx="1.5" fill="#4d78ff"/></g></svg>
 					</div>
 					<div class="k-insight__body">
 						<p class="k-insight__kicker"><?php esc_html_e( 'Análise', 'korun' ); ?></p>
 						<h3 class="k-insight__title"><?php esc_html_e( 'Narrativas que mais crescem nas redes em maio/2026', 'korun' ); ?></h3>
-						<a class="k-insight__link" href="#contato"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
+						<a class="k-insight__link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Ler mais', 'korun' ); ?> <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 7h9m0 0L7 3m4 4l-4 4"/></svg></a>
 					</div>
 				</article>
 

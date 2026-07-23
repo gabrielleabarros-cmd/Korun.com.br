@@ -40,10 +40,12 @@ add_action( 'after_setup_theme', 'korun_setup' );
  * Estilos e scripts.
  */
 function korun_enqueue_assets() {
-	// Google Fonts: Inter.
+	// Google Fonts: Instrument Sans (equivalente livre à Neue Montreal do manual
+	// de marca) com Inter como reserva. Para usar a Neue Montreal licenciada,
+	// adicione os @font-face em style.css e ela assume via --k-font.
 	wp_enqueue_style(
 		'korun-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap',
+		'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap',
 		array(),
 		null
 	);
@@ -235,48 +237,151 @@ function korun_seo_meta() {
 add_action( 'wp_head', 'korun_seo_meta', 5 );
 
 /**
+ * Cria as páginas internas na ativação do tema e configura a home e o blog.
+ */
+function korun_create_pages() {
+	$pages = array(
+		'home'                    => __( 'Home', 'korun' ),
+		'solucoes'                => __( 'Soluções', 'korun' ),
+		'produtos'                => __( 'Produtos', 'korun' ),
+		'quem-somos'              => __( 'Quem Somos', 'korun' ),
+		'insights'                => __( 'Insights', 'korun' ),
+		'contato'                 => __( 'Contato', 'korun' ),
+		'politica-de-privacidade' => __( 'Política de Privacidade', 'korun' ),
+		'termos-de-uso'           => __( 'Termos de Uso', 'korun' ),
+	);
+
+	$ids = array();
+
+	foreach ( $pages as $slug => $title ) {
+		$existing = get_page_by_path( $slug );
+		if ( $existing ) {
+			$ids[ $slug ] = $existing->ID;
+			continue;
+		}
+
+		$content = '';
+		if ( 'politica-de-privacidade' === $slug ) {
+			$content = __( "Descreva aqui como o site coleta, usa e protege os dados dos visitantes (formulário de contato, cookies e ferramentas de análise), conforme a LGPD.\n\nEdite esta página em Páginas → Política de Privacidade.", 'korun' );
+		} elseif ( 'termos-de-uso' === $slug ) {
+			$content = __( "Descreva aqui as condições de uso do site e dos serviços da Korun.\n\nEdite esta página em Páginas → Termos de Uso.", 'korun' );
+		}
+
+		$ids[ $slug ] = wp_insert_post( array(
+			'post_type'    => 'page',
+			'post_status'  => 'publish',
+			'post_title'   => $title,
+			'post_name'    => $slug,
+			'post_content' => $content,
+		) );
+	}
+
+	// Home estática (renderizada por front-page.php) e Insights como página do blog.
+	if ( ! empty( $ids['home'] ) && ! empty( $ids['insights'] ) ) {
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $ids['home'] );
+		update_option( 'page_for_posts', $ids['insights'] );
+	}
+}
+add_action( 'after_switch_theme', 'korun_create_pages' );
+
+/**
+ * Processa o formulário da página de Contato e envia por e-mail (wp_mail).
+ */
+function korun_handle_contact() {
+	$back = wp_get_referer() ? wp_get_referer() : home_url( '/contato/' );
+	$back = remove_query_arg( 'enviado', $back );
+
+	if ( ! isset( $_POST['korun_nonce'] ) || ! wp_verify_nonce( sanitize_key( wp_unslash( $_POST['korun_nonce'] ) ), 'korun_contato' ) ) {
+		wp_safe_redirect( add_query_arg( 'enviado', 'erro', $back ) );
+		exit;
+	}
+
+	$nome     = isset( $_POST['nome'] ) ? sanitize_text_field( wp_unslash( $_POST['nome'] ) ) : '';
+	$email    = isset( $_POST['email'] ) ? sanitize_email( wp_unslash( $_POST['email'] ) ) : '';
+	$telefone = isset( $_POST['telefone'] ) ? sanitize_text_field( wp_unslash( $_POST['telefone'] ) ) : '';
+	$org      = isset( $_POST['organizacao'] ) ? sanitize_text_field( wp_unslash( $_POST['organizacao'] ) ) : '';
+	$mensagem = isset( $_POST['mensagem'] ) ? sanitize_textarea_field( wp_unslash( $_POST['mensagem'] ) ) : '';
+
+	$enviado = false;
+
+	if ( $nome && $email && $mensagem ) {
+		$corpo = sprintf(
+			"Nome: %s\nE-mail: %s\nTelefone: %s\nOrganização: %s\n\nMensagem:\n%s",
+			$nome,
+			$email,
+			$telefone ? $telefone : '—',
+			$org ? $org : '—',
+			$mensagem
+		);
+
+		$enviado = wp_mail(
+			korun_mod( 'email' ),
+			sprintf( __( 'Contato pelo site — %s', 'korun' ), $nome ),
+			$corpo,
+			array( 'Reply-To: ' . $nome . ' <' . $email . '>' )
+		);
+	}
+
+	wp_safe_redirect( add_query_arg( 'enviado', $enviado ? 'ok' : 'erro', $back ) );
+	exit;
+}
+add_action( 'admin_post_korun_contato', 'korun_handle_contact' );
+add_action( 'admin_post_nopriv_korun_contato', 'korun_handle_contact' );
+
+/**
  * Menu padrão exibido enquanto nenhum menu é atribuído em Aparência → Menus.
  * Os links apontam para as âncoras das seções da página inicial.
  */
 function korun_default_menu() {
 	$home = esc_url( home_url( '/' ) );
+
+	$itens = array(
+		'solucoes'   => is_page( 'solucoes' ),
+		'produtos'   => is_page( 'produtos' ),
+		'quem-somos' => is_page( 'quem-somos' ),
+		'insights'   => is_home(),
+		'contato'    => is_page( 'contato' ),
+	);
 	?>
 	<ul>
-		<li class="k-current"><a href="<?php echo $home; ?>"><?php esc_html_e( 'Home', 'korun' ); ?></a></li>
-		<li class="k-has-sub">
-			<a href="<?php echo $home; ?>#solucoes"><?php esc_html_e( 'Soluções', 'korun' ); ?> <svg class="k-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></a>
+		<li class="<?php echo is_front_page() ? 'k-current' : ''; ?>"><a href="<?php echo $home; ?>"><?php esc_html_e( 'Home', 'korun' ); ?></a></li>
+		<li class="k-has-sub <?php echo $itens['solucoes'] ? 'k-current' : ''; ?>">
+			<a href="<?php echo $home; ?>solucoes/"><?php esc_html_e( 'Soluções', 'korun' ); ?> <svg class="k-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></a>
 			<ul>
-				<li><a href="<?php echo $home; ?>#solucoes"><?php esc_html_e( 'Korun Sprint', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#solucoes"><?php esc_html_e( 'Korun Radar', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#solucoes"><?php esc_html_e( 'Korun Crisis', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#solucoes"><?php esc_html_e( 'Korun Advisory', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>solucoes/#sprint"><?php esc_html_e( 'Korun Sprint', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>solucoes/#radar"><?php esc_html_e( 'Korun Radar', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>solucoes/#crisis"><?php esc_html_e( 'Korun Crisis', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>solucoes/#advisory"><?php esc_html_e( 'Korun Advisory', 'korun' ); ?></a></li>
 			</ul>
 		</li>
-		<li class="k-has-sub">
-			<a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Produtos', 'korun' ); ?> <svg class="k-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></a>
+		<li class="k-has-sub <?php echo $itens['produtos'] ? 'k-current' : ''; ?>">
+			<a href="<?php echo $home; ?>produtos/"><?php esc_html_e( 'Produtos', 'korun' ); ?> <svg class="k-caret" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5"/></svg></a>
 			<ul>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>
-				<li><a href="<?php echo $home; ?>#produtos"><?php esc_html_e( 'Alertas Inteligentes', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#chat"><?php esc_html_e( 'Korun Chat', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#power-ads"><?php esc_html_e( 'Power Ads Pro', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#radar"><?php esc_html_e( 'Plataforma Radar', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#relatorios"><?php esc_html_e( 'Relatórios', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#mapas"><?php esc_html_e( 'Mapas de Risco', 'korun' ); ?></a></li>
+				<li><a href="<?php echo $home; ?>produtos/#alertas"><?php esc_html_e( 'Alertas Inteligentes', 'korun' ); ?></a></li>
 			</ul>
 		</li>
-		<li><a href="<?php echo $home; ?>#quem-somos"><?php esc_html_e( 'Quem Somos', 'korun' ); ?></a></li>
-		<li><a href="<?php echo $home; ?>#insights"><?php esc_html_e( 'Insights', 'korun' ); ?></a></li>
-		<li><a href="<?php echo $home; ?>#contato"><?php esc_html_e( 'Contato', 'korun' ); ?></a></li>
+		<li class="<?php echo $itens['quem-somos'] ? 'k-current' : ''; ?>"><a href="<?php echo $home; ?>quem-somos/"><?php esc_html_e( 'Quem Somos', 'korun' ); ?></a></li>
+		<li class="<?php echo $itens['insights'] ? 'k-current' : ''; ?>"><a href="<?php echo $home; ?>insights/"><?php esc_html_e( 'Insights', 'korun' ); ?></a></li>
+		<li class="<?php echo $itens['contato'] ? 'k-current' : ''; ?>"><a href="<?php echo $home; ?>contato/"><?php esc_html_e( 'Contato', 'korun' ); ?></a></li>
 	</ul>
 	<?php
 }
 
 /**
- * Logomarca padrão (ícone "K" laranja) usada quando nenhum logo é enviado no Personalizar.
+ * Logomarca padrão usada quando nenhum logo é enviado no Personalizar.
+ * Conforme o manual de marca: "K" na cor do texto com quadrado azul Sinal.
  */
 function korun_logo_icon() {
 	?>
 	<svg width="34" height="34" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-		<path d="M6 4h9v14L28 4h10L23 20l15 16H28L15 22v14H6V4z" fill="#f97316"/>
+		<path d="M12 2h9v15L33 2h7L26 19l14 19h-9L21 24v14h-9V2z" fill="currentColor"/>
+		<rect x="2" y="27" width="9" height="9" fill="#2555FF"/>
 	</svg>
 	<?php
 }

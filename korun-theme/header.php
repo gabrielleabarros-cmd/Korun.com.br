@@ -42,7 +42,7 @@
 		</nav>
 
 		<div class="k-header__cta">
-			<a class="k-btn k-btn--primary" href="<?php echo esc_url( home_url( '/' ) ); ?>#contato">
+			<a class="k-btn k-btn--primary" href="<?php echo esc_url( home_url( '/contato/' ) ); ?>">
 				<?php esc_html_e( 'Falar com a Korun', 'korun' ); ?>
 				<?php korun_arrow_icon(); ?>
 			</a>
