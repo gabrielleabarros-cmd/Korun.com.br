@@ -83,7 +83,7 @@ function korun_defaults() {
 		'cta_titulo'     => __( 'Leia o ambiente.', 'korun' ),
 		'cta_destaque'   => __( 'Decida', 'korun' ),
 		'cta_titulo_2'   => __( 'o próximo movimento.', 'korun' ),
-		'telefone'       => '+55 81 98765-4321',
+		'telefone'       => '+55 81 98288-1988',
 		'email'          => 'contato@korun.com.br',
 		'endereco'       => __( 'Recife, Pernambuco', 'korun' ),
 		'linkedin'       => 'https://www.linkedin.com',
