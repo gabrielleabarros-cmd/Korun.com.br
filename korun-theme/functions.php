@@ -124,6 +124,23 @@ function korun_customize_register( $wp_customize ) {
 		'meta_descricao' => array( __( 'SEO — meta description', 'korun' ), 'textarea' ),
 	);
 
+	// Estilo do site: claro ou escuro.
+	$wp_customize->add_setting( 'korun_estilo', array(
+		'default'           => 'claro',
+		'sanitize_callback' => function ( $value ) {
+			return in_array( $value, array( 'claro', 'escuro' ), true ) ? $value : 'claro';
+		},
+	) );
+	$wp_customize->add_control( 'korun_estilo', array(
+		'label'   => __( 'Estilo do site', 'korun' ),
+		'section' => 'korun_content',
+		'type'    => 'radio',
+		'choices' => array(
+			'claro'  => __( 'Claro (fundo branco)', 'korun' ),
+			'escuro' => __( 'Escuro (fundo preto)', 'korun' ),
+		),
+	) );
+
 	$defaults = korun_defaults();
 
 	foreach ( $fields as $key => $field ) {
@@ -139,6 +156,17 @@ function korun_customize_register( $wp_customize ) {
 	}
 }
 add_action( 'customize_register', 'korun_customize_register' );
+
+/**
+ * Aplica a classe do tema claro ao body quando selecionado no Personalizar.
+ */
+function korun_body_class( $classes ) {
+	if ( 'escuro' !== get_theme_mod( 'korun_estilo', 'claro' ) ) {
+		$classes[] = 'k-light';
+	}
+	return $classes;
+}
+add_filter( 'body_class', 'korun_body_class' );
 
 /**
  * SEO: meta description, Open Graph/Twitter Cards e dados estruturados.

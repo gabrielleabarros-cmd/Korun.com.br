@@ -31,6 +31,7 @@
 	 * Partículas — malha de pontos em ondas, com acentos azuis e laranja
 	 * ------------------------------------------------------------------ */
 	var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	var lightTheme = document.body.classList.contains('k-light');
 
 	function initParticles(canvas) {
 		var ctx = canvas.getContext('2d');
@@ -49,10 +50,10 @@
 
 		function pickColor() {
 			var r = Math.random();
-			if (r < 0.1) { return '#3b82f6'; }   // azul
-			if (r < 0.16) { return '#f97316'; }  // laranja
-			if (r < 0.5) { return '#6b7280'; }   // cinza
-			return '#d1d5db';                    // claro
+			if (r < 0.1) { return lightTheme ? '#2563eb' : '#3b82f6'; } // azul
+			if (r < 0.16) { return '#f97316'; }                          // laranja
+			if (r < 0.5) { return lightTheme ? '#a3adbd' : '#6b7280'; } // cinza
+			return lightTheme ? '#475569' : '#d1d5db';                   // contraste
 		}
 
 		function build() {

@@ -954,6 +954,68 @@ p { margin: 0; }
 .k-pagination .page-numbers.current { background: var(--k-blue); border-color: var(--k-blue); color: #fff; }
 .k-pagination a.page-numbers:hover { border-color: var(--k-text-muted); color: #fff; }
 
+/* =========================================================
+   Tema claro (Aparência → Personalizar → Estilo do site)
+   ========================================================= */
+body.k-light {
+  --k-bg: #ffffff;
+  --k-bg-soft: #f6f7f9;
+  --k-surface: #ffffff;
+  --k-surface-2: #eef0f4;
+  --k-border: #e2e5ec;
+  --k-border-soft: #eceef3;
+  --k-text: #0e1116;
+  --k-text-muted: #57606e;
+  --k-text-dim: #838b99;
+}
+
+body.k-light .k-header {
+  background: rgba(255, 255, 255, 0.88);
+}
+
+body.k-light .k-nav a:hover,
+body.k-light .k-nav > ul > li.current-menu-item > a,
+body.k-light .k-nav > ul > li.k-current > a,
+body.k-light .k-nav li ul a:hover,
+body.k-light .k-footer ul a:hover,
+body.k-light .k-footer__social a:hover,
+body.k-light .k-card:hover .k-card__arrow { color: #0e1116; }
+
+body.k-light .k-menu-toggle span { background: #0e1116; }
+
+body.k-light .k-logo { color: #0e1116; }
+
+body.k-light .k-card,
+body.k-light .k-stats__grid,
+body.k-light .k-insight,
+body.k-light .k-post-card { box-shadow: 0 1px 3px rgba(15, 23, 42, .05); }
+
+body.k-light .k-card:hover,
+body.k-light .k-insight:hover,
+body.k-light .k-post-card:hover { border-color: #b9c6e8; }
+
+body.k-light .k-nav li ul { box-shadow: 0 20px 40px rgba(15, 23, 42, .12); }
+
+body.k-light .k-client { color: #7c8494; }
+body.k-light .k-client:hover { color: #3f4652; }
+body.k-light .k-client__name small { color: #9aa1ad; }
+
+/* Cards de público mantêm imagem escura, então o texto continua claro */
+body.k-light .k-audience__title { color: #fff; }
+
+body.k-light .k-hero__tag--3 { --dot: #334155; }
+
+/* Layout interno (blog, posts, páginas) */
+body.k-light .k-entry { color: #2f3642; }
+
+body.k-light .k-cta__box {
+  border-color: rgba(249, 115, 22, .35);
+  background:
+    radial-gradient(ellipse 60% 120% at 75% 50%, rgba(37, 99, 235, .10), transparent 65%),
+    radial-gradient(ellipse 40% 100% at 92% 80%, rgba(249, 115, 22, .08), transparent 60%),
+    var(--k-bg-soft);
+}
+
 /* Accessibility helpers */
 .screen-reader-text {
   border: 0;
