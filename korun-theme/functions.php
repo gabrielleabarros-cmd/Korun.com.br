@@ -70,6 +70,143 @@ function korun_resource_hints( $urls, $relation_type ) {
 add_filter( 'wp_resource_hints', 'korun_resource_hints', 10, 2 );
 
 /**
+ * Textos editáveis do tema com seus valores padrão.
+ * Todos podem ser alterados em Aparência → Personalizar → Conteúdo do site.
+ */
+function korun_defaults() {
+	return array(
+		'hero_titulo'    => __( 'Inteligência de sinais para', 'korun' ),
+		'hero_destaque'  => __( 'decisão.', 'korun' ),
+		'hero_texto'     => __( 'Lemos o ambiente, interpretamos sinais públicos e entregamos clareza para você decidir antes que o cenário mude.', 'korun' ),
+		'cta_titulo'     => __( 'Leia o ambiente.', 'korun' ),
+		'cta_destaque'   => __( 'Decida', 'korun' ),
+		'cta_titulo_2'   => __( 'o próximo movimento.', 'korun' ),
+		'telefone'       => '+55 81 98765-4321',
+		'email'          => 'contato@korun.com.br',
+		'endereco'       => __( 'Recife, Pernambuco', 'korun' ),
+		'linkedin'       => 'https://www.linkedin.com',
+		'instagram'      => 'https://www.instagram.com',
+		'youtube'        => 'https://www.youtube.com',
+		'meta_descricao' => __( 'Inteligência de sinais para decisão: lemos o ambiente, interpretamos sinais públicos e entregamos clareza para governos, marcas e instituições decidirem antes que o cenário mude.', 'korun' ),
+	);
+}
+
+/**
+ * Lê uma opção do Personalizar com fallback para o padrão do tema.
+ */
+function korun_mod( $key ) {
+	$defaults = korun_defaults();
+	return get_theme_mod( 'korun_' . $key, isset( $defaults[ $key ] ) ? $defaults[ $key ] : '' );
+}
+
+/**
+ * Registra os campos no Personalizar (Aparência → Personalizar).
+ */
+function korun_customize_register( $wp_customize ) {
+	$wp_customize->add_section( 'korun_content', array(
+		'title'    => __( 'Conteúdo do site (Korun)', 'korun' ),
+		'priority' => 30,
+	) );
+
+	$fields = array(
+		'hero_titulo'    => array( __( 'Hero — título', 'korun' ), 'text' ),
+		'hero_destaque'  => array( __( 'Hero — palavra em azul', 'korun' ), 'text' ),
+		'hero_texto'     => array( __( 'Hero — texto de apoio', 'korun' ), 'textarea' ),
+		'cta_titulo'     => array( __( 'CTA — linha 1', 'korun' ), 'text' ),
+		'cta_destaque'   => array( __( 'CTA — palavra em azul', 'korun' ), 'text' ),
+		'cta_titulo_2'   => array( __( 'CTA — restante da linha 2', 'korun' ), 'text' ),
+		'telefone'       => array( __( 'Contato — telefone', 'korun' ), 'text' ),
+		'email'          => array( __( 'Contato — e-mail', 'korun' ), 'text' ),
+		'endereco'       => array( __( 'Contato — endereço', 'korun' ), 'text' ),
+		'linkedin'       => array( __( 'Rede social — LinkedIn (URL)', 'korun' ), 'url' ),
+		'instagram'      => array( __( 'Rede social — Instagram (URL)', 'korun' ), 'url' ),
+		'youtube'        => array( __( 'Rede social — YouTube (URL)', 'korun' ), 'url' ),
+		'meta_descricao' => array( __( 'SEO — meta description', 'korun' ), 'textarea' ),
+	);
+
+	$defaults = korun_defaults();
+
+	foreach ( $fields as $key => $field ) {
+		$wp_customize->add_setting( 'korun_' . $key, array(
+			'default'           => $defaults[ $key ],
+			'sanitize_callback' => 'url' === $field[1] ? 'esc_url_raw' : 'sanitize_text_field',
+		) );
+		$wp_customize->add_control( 'korun_' . $key, array(
+			'label'   => $field[0],
+			'section' => 'korun_content',
+			'type'    => 'url' === $field[1] ? 'url' : $field[1],
+		) );
+	}
+}
+add_action( 'customize_register', 'korun_customize_register' );
+
+/**
+ * SEO: meta description, Open Graph/Twitter Cards e dados estruturados.
+ * Desativado automaticamente se um plugin de SEO (Yoast/Rank Math) estiver ativo.
+ */
+function korun_seo_meta() {
+	if ( defined( 'WPSEO_VERSION' ) || class_exists( 'RankMath' ) ) {
+		return;
+	}
+
+	$title = wp_get_document_title();
+	$desc  = korun_mod( 'meta_descricao' );
+	if ( is_singular() && ! is_front_page() ) {
+		$excerpt = get_the_excerpt();
+		if ( $excerpt ) {
+			$desc = wp_strip_all_tags( $excerpt );
+		}
+	}
+	$url   = is_singular() ? get_permalink() : home_url( add_query_arg( array(), $GLOBALS['wp']->request ?? '' ) );
+	$image = '';
+	if ( is_singular() && has_post_thumbnail() ) {
+		$image = get_the_post_thumbnail_url( null, 'large' );
+	} elseif ( has_custom_logo() ) {
+		$logo_id = get_theme_mod( 'custom_logo' );
+		$logo    = wp_get_attachment_image_src( $logo_id, 'full' );
+		if ( $logo ) {
+			$image = $logo[0];
+		}
+	}
+
+	echo '<meta name="description" content="' . esc_attr( $desc ) . '">' . "\n";
+	echo '<meta property="og:locale" content="pt_BR">' . "\n";
+	echo '<meta property="og:type" content="' . ( is_singular( 'post' ) ? 'article' : 'website' ) . '">' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr( $desc ) . '">' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '">' . "\n";
+	if ( $image ) {
+		echo '<meta property="og:image" content="' . esc_url( $image ) . '">' . "\n";
+	}
+	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
+
+	// Dados estruturados (JSON-LD) na página inicial.
+	if ( is_front_page() ) {
+		$schema = array(
+			'@context'     => 'https://schema.org',
+			'@type'        => 'Organization',
+			'name'         => get_bloginfo( 'name' ),
+			'url'          => home_url( '/' ),
+			'description'  => $desc,
+			'email'        => korun_mod( 'email' ),
+			'telephone'    => korun_mod( 'telefone' ),
+			'address'      => array(
+				'@type'           => 'PostalAddress',
+				'addressLocality' => korun_mod( 'endereco' ),
+				'addressCountry'  => 'BR',
+			),
+			'sameAs'       => array_values( array_filter( array( korun_mod( 'linkedin' ), korun_mod( 'instagram' ), korun_mod( 'youtube' ) ) ) ),
+		);
+		if ( $image ) {
+			$schema['logo'] = $image;
+		}
+		echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+	}
+}
+add_action( 'wp_head', 'korun_seo_meta', 5 );
+
+/**
  * Menu padrão exibido enquanto nenhum menu é atribuído em Aparência → Menus.
  * Os links apontam para as âncoras das seções da página inicial.
  */

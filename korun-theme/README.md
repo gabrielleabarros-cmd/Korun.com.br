@@ -27,6 +27,7 @@ A página inicial (`front-page.php`) é exibida automaticamente — não é prec
 
 ## Personalização
 
+- **Textos e contatos** — Aparência → Personalizar → **Conteúdo do site (Korun)**: título e texto do hero, frases do CTA, telefone, e-mail, endereço, URLs das redes sociais e meta description de SEO — tudo sem tocar em código.
 - **Logo** — Aparência → Personalizar → Identidade do site. Sem logo enviado, o ícone "K" laranja padrão é usado.
 - **Nome do site** — o texto ao lado do logo usa o título do site (Configurações → Geral).
 - **Menus** — Aparência → Menus. Há duas posições: *Menu Principal* e *Menu do Rodapé*. Sem menu atribuído, o tema exibe o menu padrão com âncoras para as seções (`#solucoes`, `#como-funciona`, `#insights`, `#contato` etc.).
@@ -51,6 +52,12 @@ korun-theme/
 └── assets/
     └── js/main.js     # Menu mobile + animação de partículas
 ```
+
+## SEO
+
+O tema já entrega a base técnica: HTML semântico com um único H1 por página, site leve (um CSS, um JS pequeno, sem frameworks) para bons Core Web Vitals, mobile-first, `lang="pt-BR"`, e — direto no `<head>` — meta description, Open Graph/Twitter Cards e dados estruturados JSON-LD (Organization). O sitemap XML nativo do WordPress fica em `/wp-sitemap.xml`.
+
+Se instalar um plugin de SEO (Yoast ou Rank Math), as tags do tema são desativadas automaticamente para não duplicar. Lembre-se também de manter **Configurações → Leitura → "Não desencorajar mecanismos de busca"** desmarcado.
 
 ## Requisitos
 

@@ -16,10 +16,10 @@ get_header();
 
 		<div class="k-hero__copy">
 			<h1 class="k-hero__title">
-				<?php esc_html_e( 'Inteligência de sinais para', 'korun' ); ?>
-				<span class="is-blue"><?php esc_html_e( 'decisão.', 'korun' ); ?></span>
+				<?php echo esc_html( korun_mod( 'hero_titulo' ) ); ?>
+				<span class="is-blue"><?php echo esc_html( korun_mod( 'hero_destaque' ) ); ?></span>
 			</h1>
-			<p class="k-hero__lead"><?php esc_html_e( 'Lemos o ambiente, interpretamos sinais públicos e entregamos clareza para você decidir antes que o cenário mude.', 'korun' ); ?></p>
+			<p class="k-hero__lead"><?php echo esc_html( korun_mod( 'hero_texto' ) ); ?></p>
 			<div class="k-hero__actions">
 				<a class="k-btn k-btn--primary" href="#solucoes"><?php esc_html_e( 'Conheça o Korun Sprint', 'korun' ); ?></a>
 				<a class="k-btn k-btn--outline" href="#como-funciona">
@@ -429,11 +429,11 @@ get_header();
 		<div class="k-cta__box">
 			<canvas class="k-cta__canvas" data-korun-particles data-korun-particles-density="0.5" aria-hidden="true"></canvas>
 			<h2 class="k-cta__title">
-				<?php esc_html_e( 'Leia o ambiente.', 'korun' ); ?><br>
-				<span class="is-blue"><?php esc_html_e( 'Decida', 'korun' ); ?></span> <?php esc_html_e( 'o próximo movimento.', 'korun' ); ?>
+				<?php echo esc_html( korun_mod( 'cta_titulo' ) ); ?><br>
+				<span class="is-blue"><?php echo esc_html( korun_mod( 'cta_destaque' ) ); ?></span> <?php echo esc_html( korun_mod( 'cta_titulo_2' ) ); ?>
 			</h2>
 			<div class="k-cta__action">
-				<a class="k-btn k-btn--primary" href="mailto:contato@korun.com.br"><?php esc_html_e( 'Solicitar diagnóstico', 'korun' ); ?></a>
+				<a class="k-btn k-btn--primary" href="mailto:<?php echo esc_attr( korun_mod( 'email' ) ); ?>"><?php esc_html_e( 'Solicitar diagnóstico', 'korun' ); ?></a>
 			</div>
 		</div>
 	</div>
