@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'KORUN_VERSION', '1.0.0' );
+define( 'KORUN_VERSION', '1.1.0' );
 
 /**
  * Suportes do tema, menus e tamanhos de imagem.
@@ -126,14 +126,16 @@ function korun_customize_register( $wp_customize ) {
 		'meta_descricao' => array( __( 'SEO — meta description', 'korun' ), 'textarea' ),
 	);
 
-	// Estilo do site: claro ou escuro.
-	$wp_customize->add_setting( 'korun_estilo', array(
+	// Estilo do site: claro ou escuro. A chave "korun_estilo_v2" ignora
+	// escolhas antigas gravadas por versões anteriores do tema, garantindo
+	// o estilo claro (Base #F2F0EA do manual de marca) como padrão.
+	$wp_customize->add_setting( 'korun_estilo_v2', array(
 		'default'           => 'claro',
 		'sanitize_callback' => function ( $value ) {
 			return in_array( $value, array( 'claro', 'escuro' ), true ) ? $value : 'claro';
 		},
 	) );
-	$wp_customize->add_control( 'korun_estilo', array(
+	$wp_customize->add_control( 'korun_estilo_v2', array(
 		'label'   => __( 'Estilo do site', 'korun' ),
 		'section' => 'korun_content',
 		'type'    => 'radio',
@@ -172,10 +174,13 @@ function korun_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'korun_customize_register' );
 
 /**
- * Aplica a classe do tema claro ao body quando selecionado no Personalizar.
+ * Aplica a classe de estilo ao body. O claro é o padrão do CSS; o escuro
+ * só entra com a classe k-escuro, escolhida no Personalizar.
  */
 function korun_body_class( $classes ) {
-	if ( 'escuro' !== get_theme_mod( 'korun_estilo', 'claro' ) ) {
+	if ( 'escuro' === get_theme_mod( 'korun_estilo_v2', 'claro' ) ) {
+		$classes[] = 'k-escuro';
+	} else {
 		$classes[] = 'k-light';
 	}
 	return $classes;

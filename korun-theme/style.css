@@ -4,7 +4,7 @@ Theme URI: https://korun.com.br
 Author: Korun
 Author URI: https://korun.com.br
 Description: Tema WordPress da Korun — Inteligência de sinais para decisão. Landing page dark com hero animado, soluções, estatísticas, metodologia, públicos, insights e CTA.
-Version: 1.0.0
+Version: 1.1.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -1109,13 +1109,15 @@ p { margin: 0; }
 }
 .k-notice--ok { color: #34d399; border-color: rgba(52, 211, 153, .4); background: rgba(52, 211, 153, .08); }
 .k-notice--erro { color: #f87171; border-color: rgba(248, 113, 113, .4); background: rgba(248, 113, 113, .08); }
-body.k-light .k-notice--ok { color: #047857; }
-body.k-light .k-notice--erro { color: #b91c1c; }
+body:not(.k-escuro) .k-notice--ok { color: #047857; }
+body:not(.k-escuro) .k-notice--erro { color: #b91c1c; }
 
 /* =========================================================
-   Tema claro (Aparência → Personalizar → Estilo do site)
+   Tema claro — padrão do site (Base #F2F0EA do manual de marca).
+   Aplicado sempre, exceto quando o estilo Escuro é escolhido no
+   Personalizar (classe k-escuro no body).
    ========================================================= */
-body.k-light {
+body:not(.k-escuro) {
   /* Base (#F2F0EA) e Concreto (#B9B9B4) do manual de marca */
   --k-bg: #f2f0ea;
   --k-bg-soft: #ebe9e1;
@@ -1128,46 +1130,46 @@ body.k-light {
   --k-text-dim: #8f8e85;
 }
 
-body.k-light .k-header {
+body:not(.k-escuro) .k-header {
   background: rgba(242, 240, 234, 0.9);
 }
 
-body.k-light .k-nav a:hover,
-body.k-light .k-nav > ul > li.current-menu-item > a,
-body.k-light .k-nav > ul > li.k-current > a,
-body.k-light .k-nav li ul a:hover,
-body.k-light .k-footer ul a:hover,
-body.k-light .k-footer__social a:hover,
-body.k-light .k-card:hover .k-card__arrow { color: #111111; }
+body:not(.k-escuro) .k-nav a:hover,
+body:not(.k-escuro) .k-nav > ul > li.current-menu-item > a,
+body:not(.k-escuro) .k-nav > ul > li.k-current > a,
+body:not(.k-escuro) .k-nav li ul a:hover,
+body:not(.k-escuro) .k-footer ul a:hover,
+body:not(.k-escuro) .k-footer__social a:hover,
+body:not(.k-escuro) .k-card:hover .k-card__arrow { color: #111111; }
 
-body.k-light .k-menu-toggle span { background: #111111; }
+body:not(.k-escuro) .k-menu-toggle span { background: #111111; }
 
-body.k-light .k-logo { color: #111111; }
+body:not(.k-escuro) .k-logo { color: #111111; }
 
-body.k-light .k-card,
-body.k-light .k-stats__grid,
-body.k-light .k-insight,
-body.k-light .k-post-card { box-shadow: 0 2px 6px rgba(17, 17, 17, .05); }
+body:not(.k-escuro) .k-card,
+body:not(.k-escuro) .k-stats__grid,
+body:not(.k-escuro) .k-insight,
+body:not(.k-escuro) .k-post-card { box-shadow: 0 2px 6px rgba(17, 17, 17, .05); }
 
-body.k-light .k-card:hover,
-body.k-light .k-insight:hover,
-body.k-light .k-post-card:hover { border-color: #b9c4ef; }
+body:not(.k-escuro) .k-card:hover,
+body:not(.k-escuro) .k-insight:hover,
+body:not(.k-escuro) .k-post-card:hover { border-color: #b9c4ef; }
 
-body.k-light .k-nav li ul { box-shadow: 0 20px 40px rgba(17, 17, 17, .12); }
+body:not(.k-escuro) .k-nav li ul { box-shadow: 0 20px 40px rgba(17, 17, 17, .12); }
 
-body.k-light .k-client { color: #7c8494; }
-body.k-light .k-client:hover { color: #3f4652; }
-body.k-light .k-client__name small { color: #9aa1ad; }
+body:not(.k-escuro) .k-client { color: #7c8494; }
+body:not(.k-escuro) .k-client:hover { color: #3f4652; }
+body:not(.k-escuro) .k-client__name small { color: #9aa1ad; }
 
 /* Cards de público mantêm imagem escura, então o texto continua claro */
-body.k-light .k-audience__title { color: #fff; }
+body:not(.k-escuro) .k-audience__title { color: #fff; }
 
-body.k-light .k-hero__tag--3 { --dot: #111111; }
+body:not(.k-escuro) .k-hero__tag--3 { --dot: #111111; }
 
 /* Layout interno (blog, posts, páginas) */
-body.k-light .k-entry { color: #2f3642; }
+body:not(.k-escuro) .k-entry { color: #2f3642; }
 
-body.k-light .k-cta__box {
+body:not(.k-escuro) .k-cta__box {
   border-color: rgba(255, 90, 31, .35);
   background:
     radial-gradient(ellipse 60% 120% at 75% 50%, rgba(37, 85, 255, .10), transparent 65%),
