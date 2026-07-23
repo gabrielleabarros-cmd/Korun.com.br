@@ -143,6 +143,18 @@ function korun_customize_register( $wp_customize ) {
 		),
 	) );
 
+	// E-mail interno que recebe as mensagens do formulário (não aparece no site).
+	$wp_customize->add_setting( 'korun_email_form', array(
+		'default'           => get_option( 'admin_email' ),
+		'sanitize_callback' => 'sanitize_email',
+	) );
+	$wp_customize->add_control( 'korun_email_form', array(
+		'label'       => __( 'Contato — e-mail que recebe o formulário', 'korun' ),
+		'description' => __( 'Para onde as mensagens do formulário são enviadas. Não é exibido no site (o e-mail público é o campo "Contato — e-mail").', 'korun' ),
+		'section'     => 'korun_content',
+		'type'        => 'text',
+	) );
+
 	$defaults = korun_defaults();
 
 	foreach ( $fields as $key => $field ) {
@@ -316,7 +328,7 @@ function korun_handle_contact() {
 		);
 
 		$enviado = wp_mail(
-			korun_mod( 'email' ),
+			get_theme_mod( 'korun_email_form', get_option( 'admin_email' ) ),
 			sprintf( __( 'Contato pelo site — %s', 'korun' ), $nome ),
 			$corpo,
 			array( 'Reply-To: ' . $nome . ' <' . $email . '>' )
